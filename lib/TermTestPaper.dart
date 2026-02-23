@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'selectTerm.dart';
 
 class TermTestPaper extends StatefulWidget {
   const TermTestPaper({Key? key}) : super(key: key);
@@ -175,10 +176,17 @@ class _TermTestPaperState extends State<TermTestPaper> {
   }
 
   Widget _buildSubjectButton(BuildContext context, String subject) {
+    final int gradeNum = int.parse(selectedGrade!.split(' ').last);
     return InkWell(
       onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Selected Subject: $subject')),
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => SelectTerm(
+              grade: gradeNum,
+              subject: subject,
+            ),
+          ),
         );
       },
       borderRadius: BorderRadius.circular(15),
