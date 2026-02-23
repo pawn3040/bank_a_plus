@@ -9,82 +9,74 @@ class Home extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Edica - Bank A+'),
-        backgroundColor: Colors.deepPurple,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.deepPurple.shade50, Colors.white],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [Colors.deepPurple.shade50, Colors.white],
         ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              const Text(
-                'Welcome to Edica',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.deepPurple,
-                ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            const Text(
+              'Welcome to Edica',
+              style: TextStyle(
+                fontSize: 28,
+                fontWeight: FontWeight.bold,
+                color: Colors.deepPurple,
               ),
-              const SizedBox(height: 8),
-              Text(
-                'Select a category to start learning',
-                style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.deepPurple.withOpacity(0.7),
-                ),
+            ),
+            const SizedBox(height: 8),
+            Text(
+              'Select a category to start learning',
+              style: TextStyle(
+                fontSize: 16,
+                color: Colors.deepPurple.withOpacity(0.7),
               ),
-              const SizedBox(height: 40),
-              _buildCategoryCard(
+            ),
+            const SizedBox(height: 40),
+            _buildCategoryCard(
+              context,
+              'Term Test Papers',
+              'Grades 06 - 13',
+              Icons.assignment,
+              Colors.orange,
+              () => Navigator.push(
                 context,
-                'Term Test Papers',
-                'Grades 06 - 13',
-                Icons.assignment,
-                Colors.orange,
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const TermTestPaper()),
-                ),
+                MaterialPageRoute(builder: (context) => const TermTestPaper()),
               ),
-              const SizedBox(height: 20),
-              _buildCategoryCard(
+            ),
+            const SizedBox(height: 20),
+            _buildCategoryCard(
+              context,
+              'OL Pass Papers',
+              'Ordinary Level',
+              Icons.history_edu,
+              Colors.blue,
+              () => Navigator.push(
                 context,
-                'OL Pass Papers',
-                'Ordinary Level',
-                Icons.history_edu,
-                Colors.blue,
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const OlPassPaper()),
-                ),
+                MaterialPageRoute(builder: (context) => const OlPassPaper()),
               ),
-              const SizedBox(height: 20),
-              _buildCategoryCard(
+            ),
+            const SizedBox(height: 20),
+            _buildCategoryCard(
+              context,
+              'Grade 5 Scholarship',
+              'Primary School',
+              Icons.stars,
+              Colors.green,
+              () => Navigator.push(
                 context,
-                'Grade 5 Scholarship',
-                'Primary School',
-                Icons.stars,
-                Colors.green,
-                () => Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Grade5ScholarshipPassPaper(),
-                  ),
+                MaterialPageRoute(
+                  builder: (context) => const Grade5ScholarshipPassPaper(),
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
