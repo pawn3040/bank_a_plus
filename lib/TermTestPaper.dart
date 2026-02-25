@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'selectTerm.dart';
+import 'paperShow.dart';
 
 class TermTestPaper extends StatefulWidget {
-  const TermTestPaper({Key? key}) : super(key: key);
+  final int term;
+  const TermTestPaper({Key? key, required this.term}) : super(key: key);
 
   @override
   State<TermTestPaper> createState() => _TermTestPaperState();
@@ -65,21 +66,23 @@ class _TermTestPaperState extends State<TermTestPaper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedGrade == null ? 'Term Test Papers' : 'Subjects for $selectedGrade'),
+        title: Text(selectedGrade == null ? 'Term ${widget.term} Papers' : 'Subjects for $selectedGrade (Term ${widget.term})'),
         backgroundColor: Colors.deepPurple,
         elevation: 0,
         centerTitle: true,
-        leading: selectedGrade != null
-            ? IconButton(
-                icon: const Icon(Icons.arrow_back),
-                onPressed: () {
-                  setState(() {
-                    selectedGrade = null;
-                    subjects = [];
-                  });
-                },
-              )
-            : null,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            if (selectedGrade != null) {
+              setState(() {
+                selectedGrade = null;
+                subjects = [];
+              });
+            } else {
+              Navigator.pop(context);
+            }
+          },
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(
@@ -182,9 +185,10 @@ class _TermTestPaperState extends State<TermTestPaper> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => SelectTerm(
+            builder: (context) => PaperShow(
               grade: gradeNum,
               subject: subject,
+              term: widget.term,
             ),
           ),
         );

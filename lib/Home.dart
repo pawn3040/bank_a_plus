@@ -1,6 +1,6 @@
 import 'package:bank_a_plus/Grade5ScholarshipPassPaper.dart';
 import 'package:bank_a_plus/OlPassPaper.dart';
-import 'package:bank_a_plus/TermTestPaper.dart';
+import 'package:bank_a_plus/selectTerm.dart';
 import 'package:flutter/material.dart';
 
 
@@ -47,7 +47,7 @@ class Home extends StatelessWidget {
               Colors.orange,
               () => Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => const TermTestPaper()),
+                MaterialPageRoute(builder: (context) => const SelectTerm()),
               ),
             ),
             const SizedBox(height: 20),

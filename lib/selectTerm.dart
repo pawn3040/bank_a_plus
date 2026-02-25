@@ -1,15 +1,8 @@
 import 'package:flutter/material.dart';
-import 'paperShow.dart';
+import 'TermTestPaper.dart';
 
 class SelectTerm extends StatelessWidget {
-  final int grade;
-  final String subject;
-
-  const SelectTerm({
-    Key? key,
-    required this.grade,
-    required this.subject,
-  }) : super(key: key);
+  const SelectTerm({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -96,20 +89,20 @@ class SelectTerm extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(width: 12),
-                    Expanded(
+                    const Expanded(
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Grade $grade  •  $subject',
-                            style: const TextStyle(
+                            'Exam Term',
+                            style: TextStyle(
                               fontSize: 15,
                               fontWeight: FontWeight.w700,
                               color: Color(0xFF2D2D2D),
                             ),
                           ),
-                          const SizedBox(height: 2),
-                          const Text(
+                          SizedBox(height: 2),
+                          Text(
                             'Choose a term to view papers',
                             style: TextStyle(
                               fontSize: 13,
@@ -156,8 +149,6 @@ class SelectTerm extends StatelessWidget {
                       termNumber: term['term'] as int,
                       icon: term['icon'] as IconData,
                       gradientColors: term['gradientColors'] as List<Color>,
-                      grade: grade,
-                      subject: subject,
                     );
                   },
                 ),
@@ -175,16 +166,12 @@ class _TermCard extends StatefulWidget {
   final int termNumber;
   final IconData icon;
   final List<Color> gradientColors;
-  final int grade;
-  final String subject;
 
   const _TermCard({
     required this.label,
     required this.termNumber,
     required this.icon,
     required this.gradientColors,
-    required this.grade,
-    required this.subject,
   });
 
   @override
@@ -223,9 +210,7 @@ class _TermCardState extends State<_TermCard>
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => PaperShow(
-            grade: widget.grade,
-            subject: widget.subject,
+          builder: (context) => TermTestPaper(
             term: widget.termNumber,
           ),
         ),
