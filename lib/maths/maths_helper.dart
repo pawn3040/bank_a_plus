@@ -250,7 +250,7 @@ class _MathsHelperState extends State<MathsHelper> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      '$_baseUrl/get_image?name=${qanda.qimagename}',
+                      'http://localhost:8081/QandA/${qanda.qimagename}',
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
                         height: 100,
@@ -300,7 +300,7 @@ class _MathsHelperState extends State<MathsHelper> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        '$_baseUrl/get_image?name=${qanda.aimagename}',
+                        'http://localhost:8081/QandA/${qanda.aimagename}',
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
                           height: 100,
