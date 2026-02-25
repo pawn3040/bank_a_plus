@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'TermTestPaper.dart';
+import 'subjects.dart';
 
 class SelectTerm extends StatelessWidget {
   const SelectTerm({Key? key}) : super(key: key);
@@ -47,96 +47,11 @@ class SelectTerm extends StatelessWidget {
         iconTheme: const IconThemeData(color: Colors.white),
       ),
       body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFEDE9FF), Color(0xFFF9F9FF)],
-          ),
-        ),
-        child: Padding(
+          child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Header info
-              Container(
-                width: double.infinity,
-                padding: const EdgeInsets.all(16),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(16),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFF6C47FF).withOpacity(0.1),
-                      blurRadius: 12,
-                      offset: const Offset(0, 4),
-                    ),
-                  ],
-                ),
-                child: Row(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        color: const Color(0xFF6C47FF).withOpacity(0.1),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: const Icon(
-                        Icons.info_outline_rounded,
-                        color: Color(0xFF6C47FF),
-                        size: 24,
-                      ),
-                    ),
-                    const SizedBox(width: 12),
-                    const Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Exam Term',
-                            style: TextStyle(
-                              fontSize: 15,
-                              fontWeight: FontWeight.w700,
-                              color: Color(0xFF2D2D2D),
-                            ),
-                          ),
-                          SizedBox(height: 2),
-                          Text(
-                            'Choose a term to view papers',
-                            style: TextStyle(
-                              fontSize: 13,
-                              color: Color(0xFF888888),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-
-              const SizedBox(height: 36),
-
-              const Text(
-                'Select Term',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  color: Color(0xFF2D2D2D),
-                ),
-              ),
-              const SizedBox(height: 6),
-              const Text(
-                'Tap a term below to browse papers',
-                style: TextStyle(
-                  fontSize: 14,
-                  color: Color(0xFF888888),
-                ),
-              ),
-
-              const SizedBox(height: 28),
-
               // Term buttons
               Expanded(
                 child: ListView.separated(
@@ -210,7 +125,7 @@ class _TermCardState extends State<_TermCard>
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => TermTestPaper(
+          builder: (context) => Subjects(
             term: widget.termNumber,
           ),
         ),
@@ -253,7 +168,7 @@ class _TermCardState extends State<_TermCard>
                   ),
                   child: Icon(
                     widget.icon,
-                    color: Colors.white,
+                    color: const Color.fromARGB(255, 247, 247, 247),
                     size: 32,
                   ),
                 ),

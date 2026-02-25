@@ -99,14 +99,7 @@ class _TermTestPaperState extends State<TermTestPaper> {
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  selectedGrade == null ? 'Select Your Grade' : 'Select Subject',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
-                  ),
-                ),
+       
               ),
               if (isLoading)
                 const Expanded(

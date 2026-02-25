@@ -18,7 +18,7 @@ class _MainScaffoldState extends State<MainScaffold> {
   ];
 
   final List<String> _titles = const [
-    'Edica - Bank A+',
+    'Home',
     'Maths Helper',
   ];
 

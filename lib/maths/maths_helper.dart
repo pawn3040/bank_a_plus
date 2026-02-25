@@ -112,14 +112,7 @@ class _MathsHelperState extends State<MathsHelper> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    'Maths Helper',
-                    style: TextStyle(
-                      fontSize: 28,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.deepPurple,
-                    ),
-                  ),
+                
                   ElevatedButton.icon(
                     onPressed: () async {
                       final result = await Navigator.push(
@@ -144,14 +137,6 @@ class _MathsHelperState extends State<MathsHelper> {
                 ],
               ),
             ),
-            Text(
-              'Questions and Answers to help you learn',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.deepPurple.withOpacity(0.7),
-              ),
-            ),
-            const SizedBox(height: 24),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())

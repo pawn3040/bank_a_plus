@@ -1,7 +1,5 @@
-import 'package:bank_a_plus/AlPassPaper.dart';
-import 'package:bank_a_plus/Grade5ScholarshipPassPaper.dart';
-import 'package:bank_a_plus/OlPassPaper.dart';
 import 'package:bank_a_plus/selectTerm.dart';
+import 'package:bank_a_plus/subjects.dart';
 import 'package:flutter/material.dart';
 
 
@@ -18,78 +16,64 @@ class Home extends StatelessWidget {
           colors: [Colors.deepPurple.shade50, Colors.white],
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            const Text(
-              'Welcome to Edica',
-              style: TextStyle(
-                fontSize: 28,
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple,
-              ),
-            ),
-            const SizedBox(height: 8),
-            Text(
-              'Select a category to start learning',
-              style: TextStyle(
-                fontSize: 16,
-                color: Colors.deepPurple.withOpacity(0.7),
-              ),
-            ),
-            const SizedBox(height: 40),
-            _buildCategoryCard(
-              context,
-              'Term Test Papers',
-              'Grades 06 - 13',
-              Icons.assignment,
-              Colors.orange,
-              () => Navigator.push(
+      child: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 40),
+              _buildCategoryCard(
                 context,
-                MaterialPageRoute(builder: (context) => const SelectTerm()),
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildCategoryCard(
-              context,
-              'A/L Pass Papers',
-              'Advanced Level',
-              Icons.history_edu,
-              Colors.red,
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const AlPassPaper()),
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildCategoryCard(
-              context,
-              'OL Pass Papers',
-              'Ordinary Level',
-              Icons.history_edu,
-              Colors.blue,
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => const OlPassPaper()),
-              ),
-            ),
-            const SizedBox(height: 20),
-            _buildCategoryCard(
-              context,
-              'Grade 5 Scholarship',
-              'Primary School',
-              Icons.stars,
-              Colors.green,
-              () => Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const Grade5ScholarshipPassPaper(),
+                'Term Test Papers',
+                'Grades 06 - 13',
+                Icons.assignment,
+                Colors.orange,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SelectTerm()),
                 ),
               ),
-            ),
-          ],
+              const SizedBox(height: 20),
+              _buildCategoryCard(
+                context,
+                'A/L Pass Papers',
+                'Advanced Level',
+                Icons.history_edu,
+                Colors.red,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Subjects(term: 3, fixedGrade: 22)),
+                ),
+              ),
+              const SizedBox(height: 20),
+              _buildCategoryCard(
+                context,
+                'OL Pass Papers',
+                'Ordinary Level',
+                Icons.history_edu,
+                Colors.blue,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const Subjects(term: 3, fixedGrade: 21)),
+                ),
+              ),
+              const SizedBox(height: 20),
+              _buildCategoryCard(
+                context,
+                'Grade 5 Scholarship',
+                'Primary School',
+                Icons.stars,
+                Colors.green,
+                () => Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Subjects(term: 3, fixedGrade: 20),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
