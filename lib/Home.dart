@@ -1,3 +1,4 @@
+import 'package:bank_a_plus/AlPassPaper.dart';
 import 'package:bank_a_plus/Grade5ScholarshipPassPaper.dart';
 import 'package:bank_a_plus/OlPassPaper.dart';
 import 'package:bank_a_plus/selectTerm.dart';
@@ -48,6 +49,18 @@ class Home extends StatelessWidget {
               () => Navigator.push(
                 context,
                 MaterialPageRoute(builder: (context) => const SelectTerm()),
+              ),
+            ),
+            const SizedBox(height: 20),
+            _buildCategoryCard(
+              context,
+              'A/L Pass Papers',
+              'Advanced Level',
+              Icons.history_edu,
+              Colors.red,
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => const AlPassPaper()),
               ),
             ),
             const SizedBox(height: 20),

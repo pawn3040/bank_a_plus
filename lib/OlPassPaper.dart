@@ -7,11 +7,11 @@ class OlPassPaper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('OL pass paper'),
-        backgroundColor: Colors.deepPurple,
+        title: const Text('O/L Pass Papers'),
+        backgroundColor: Colors.blue,
       ),
       body: const Center(
-        child: Text('OL pass paper Page'),
+        child: Text('O/L Pass Papers Page Content'),
       ),
     );
   }

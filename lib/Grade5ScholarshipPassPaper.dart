@@ -7,11 +7,11 @@ class Grade5ScholarshipPassPaper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Grade 5 scholarship pass paper'),
-        backgroundColor: Colors.deepPurple,
+        title: const Text('Grade 5 Scholarship'),
+        backgroundColor: Colors.green,
       ),
       body: const Center(
-        child: Text('Grade 5 scholarship pass paper Page'),
+        child: Text('Grade 5 Scholarship Page Content'),
       ),
     );
   }

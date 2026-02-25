@@ -151,7 +151,7 @@ class _MathsHelperState extends State<MathsHelper> {
                 color: Colors.deepPurple.withOpacity(0.7),
               ),
             ),
-            const SizedBox(height: 20),
+            const SizedBox(height: 24),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
