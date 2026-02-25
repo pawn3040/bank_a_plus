@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'paperShow.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class TermTestPaper extends StatefulWidget {
   final int term;
@@ -97,6 +98,7 @@ class _TermTestPaperState extends State<TermTestPaper> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              const AdvertisementCarousel(),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 20.0),
        

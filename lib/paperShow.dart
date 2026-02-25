@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class PaperShow extends StatefulWidget {
   final int grade;
@@ -171,20 +172,27 @@ class _PaperShowState extends State<PaperShow> {
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Color(0xFFEDE9FF), Color(0xFFF9F9FF)],
+      body: Column(
+        children: [
+          const AdvertisementCarousel(),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Color(0xFFEDE9FF), Color(0xFFF9F9FF)],
+                ),
+              ),
+              child: Column(
+                children: [
+                  _buildInfoBanner(),
+                  Expanded(child: _buildBody()),
+                ],
+              ),
+            ),
           ),
-        ),
-        child: Column(
-          children: [
-            _buildInfoBanner(),
-            Expanded(child: _buildBody()),
-          ],
-        ),
+        ],
       ),
     );
   }

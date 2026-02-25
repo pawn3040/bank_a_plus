@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:bank_a_plus/maths/add_question.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class QandADto {
   final int id;
@@ -107,6 +108,7 @@ class _MathsHelperState extends State<MathsHelper> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            const AdvertisementCarousel(),
             Padding(
               padding: const EdgeInsets.only(top: 32.0, bottom: 8.0),
               child: Row(

@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class AddQuestionPage extends StatefulWidget {
   const AddQuestionPage({Key? key}) : super(key: key);
@@ -114,6 +115,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                const AdvertisementCarousel(),
                 const Text(
                   'Post Your Question',
                   style: TextStyle(

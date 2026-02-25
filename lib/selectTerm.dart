@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'subjects.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class SelectTerm extends StatelessWidget {
   const SelectTerm({Key? key}) : super(key: key);
@@ -46,31 +47,38 @@ class SelectTerm extends StatelessWidget {
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
       ),
-      body: Container(
-          child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // Term buttons
-              Expanded(
-                child: ListView.separated(
-                  itemCount: terms.length,
-                  separatorBuilder: (_, __) => const SizedBox(height: 16),
-                  itemBuilder: (context, index) {
-                    final term = terms[index];
-                    return _TermCard(
-                      label: term['label'] as String,
-                      termNumber: term['term'] as int,
-                      icon: term['icon'] as IconData,
-                      gradientColors: term['gradientColors'] as List<Color>,
-                    );
-                  },
+      body: Column(
+        children: [
+          const AdvertisementCarousel(),
+          Expanded(
+            child: Container(
+                child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    // Term buttons
+                    Expanded(
+                      child: ListView.separated(
+                        itemCount: terms.length,
+                        separatorBuilder: (_, __) => const SizedBox(height: 16),
+                        itemBuilder: (context, index) {
+                          final term = terms[index];
+                          return _TermCard(
+                            label: term['label'] as String,
+                            termNumber: term['term'] as int,
+                            icon: term['icon'] as IconData,
+                            gradientColors: term['gradientColors'] as List<Color>,
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

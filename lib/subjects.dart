@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'paperShow.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class Subjects extends StatefulWidget {
   final int term;
@@ -113,58 +114,65 @@ class _SubjectsState extends State<Subjects> {
           },
         ),
       ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-            colors: [Colors.deepPurple.shade50, Colors.white],
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
-                child: Text(
-                  selectedGrade == null ? 'Select Your Grade' : 'Select Subject',
-                  style: const TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
-                  ),
+      body: Column(
+        children: [
+          const AdvertisementCarousel(),
+          Expanded(
+            child: Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [Colors.deepPurple.shade50, Colors.white],
                 ),
               ),
-              if (isLoading)
-                const Expanded(
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-              else
-                Expanded(
-                  child: GridView.builder(
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      childAspectRatio: 1.5,
-                      crossAxisSpacing: 16,
-                      mainAxisSpacing: 16,
+              child: Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 20.0),
+                      child: Text(
+                        selectedGrade == null ? 'Select Your Grade' : 'Select Subject',
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.deepPurple,
+                        ),
+                      ),
                     ),
-                    itemCount: selectedGrade == null ? grades.length : subjectsList.length,
-                    itemBuilder: (context, index) {
-                      if (selectedGrade == null) {
-                        return _buildGradeButton(context, grades[index]);
-                      } else {
-                        return _buildSubjectButton(context, subjectsList[index]);
-                      }
-                    },
-                  ),
+                    if (isLoading)
+                      const Expanded(
+                        child: Center(
+                          child: CircularProgressIndicator(),
+                        ),
+                      )
+                    else
+                      Expanded(
+                        child: GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            childAspectRatio: 1.5,
+                            crossAxisSpacing: 16,
+                            mainAxisSpacing: 16,
+                          ),
+                          itemCount: selectedGrade == null ? grades.length : subjectsList.length,
+                          itemBuilder: (context, index) {
+                            if (selectedGrade == null) {
+                              return _buildGradeButton(context, grades[index]);
+                            } else {
+                              return _buildSubjectButton(context, subjectsList[index]);
+                            }
+                          },
+                        ),
+                      ),
+                  ],
                 ),
-            ],
+              ),
+            ),
           ),
-        ),
+        ],
       ),
     );
   }

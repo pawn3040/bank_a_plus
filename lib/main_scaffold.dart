@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bank_a_plus/Home.dart';
 import 'package:bank_a_plus/maths/maths_helper.dart';
+import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class MainScaffold extends StatefulWidget {
   const MainScaffold({Key? key}) : super(key: key);
@@ -37,7 +38,12 @@ class _MainScaffoldState extends State<MainScaffold> {
         elevation: 0,
         centerTitle: true,
       ),
-      body: _pages[_selectedIndex],
+      body: Column(
+        children: [
+          const AdvertisementCarousel(),
+          Expanded(child: _pages[_selectedIndex]),
+        ],
+      ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [
