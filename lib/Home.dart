@@ -22,7 +22,7 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              const SizedBox(height: 40),
+              const SizedBox(height: 1),
               _buildCategoryCard(
                 context,
                 'Term Test Papers',

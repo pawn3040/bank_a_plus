@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'paperShow.dart';
 import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
+import 'package:bank_a_plus/widgets/network_error_widget.dart';
 
 class TermTestPaper extends StatefulWidget {
   final int term;
@@ -26,11 +27,13 @@ class _TermTestPaperState extends State<TermTestPaper> {
 
   List<String> subjects = [];
   bool isLoading = false;
+  bool hasError = false;
   String? selectedGrade;
 
   Future<void> _fetchSubjects(String grade) async {
     setState(() {
       isLoading = true;
+      hasError = false;
       selectedGrade = grade;
       subjects = [];
     });
@@ -39,7 +42,7 @@ class _TermTestPaperState extends State<TermTestPaper> {
       // Extract grade number from "Grade XX"
       final int gradeNum = int.parse(grade.split(' ').last);
       final response = await http.get(
-        Uri.parse('http://localhost:8081/api/v1/paper/get_subjects_by_grade?grade=$gradeNum'),
+        Uri.parse('http://10.39.30.171:8081/api/v1/paper/get_subjects_by_grade?grade=$gradeNum'),
       );
 
       if (response.statusCode == 200) {
@@ -54,12 +57,8 @@ class _TermTestPaperState extends State<TermTestPaper> {
     } catch (e) {
       setState(() {
         isLoading = false;
+        hasError = true;
       });
-      if (mounted) {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Error: ${e.toString()}')),
-        );
-      }
     }
   }
 
@@ -107,6 +106,12 @@ class _TermTestPaperState extends State<TermTestPaper> {
                 const Expanded(
                   child: Center(
                     child: CircularProgressIndicator(),
+                  ),
+                )
+              else if (hasError)
+                Expanded(
+                  child: NetworkErrorWidget(
+                    onRetry: () => _fetchSubjects(selectedGrade!),
                   ),
                 )
               else

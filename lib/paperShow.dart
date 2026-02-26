@@ -5,6 +5,7 @@ import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
+import 'package:bank_a_plus/widgets/network_error_widget.dart';
 
 class PaperShow extends StatefulWidget {
   final int grade;
@@ -41,7 +42,7 @@ class _Paper {
 
 // ── State ─────────────────────────────────────────────────────────────────────
 class _PaperShowState extends State<PaperShow> {
-  static const String _baseUrl = 'http://localhost:8081/api/v1/paper';
+  static const String _baseUrl = 'http://10.39.30.171:8081/api/v1/paper';
 
   // medium order: Sinhala first, Tamil second, English third
   static const List<String> _mediumOrder = ['Sinhala', 'Tamil', 'English'];
@@ -264,35 +265,8 @@ class _PaperShowState extends State<PaperShow> {
     }
 
     if (errorMessage != null) {
-      return Center(
-        child: Padding(
-          padding: const EdgeInsets.all(24.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              const Icon(Icons.error_outline_rounded,
-                  color: Color(0xFF6C47FF), size: 56),
-              const SizedBox(height: 16),
-              Text(errorMessage!,
-                  textAlign: TextAlign.center,
-                  style: const TextStyle(fontSize: 14, color: Color(0xFF555555))),
-              const SizedBox(height: 24),
-              ElevatedButton.icon(
-                onPressed: _fetchAllPapers,
-                icon: const Icon(Icons.refresh_rounded),
-                label: const Text('Retry'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF6C47FF),
-                  foregroundColor: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 28, vertical: 12),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(14)),
-                ),
-              ),
-            ],
-          ),
-        ),
+      return NetworkErrorWidget(
+        onRetry: _fetchAllPapers,
       );
     }
 

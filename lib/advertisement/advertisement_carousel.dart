@@ -11,8 +11,8 @@ class AdvertisementCarousel extends StatefulWidget {
 }
 
 class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
-  final String _apiUrl = 'http://localhost:8081/api/v1/advertisement/get_active';
-  final String _baseImageUrl = 'http://localhost:8081/addvertiesment/';
+  final String _apiUrl = 'http://10.39.30.171:8081/api/v1/advertisement/get_active';
+  final String _baseImageUrl = 'http://10.39.30.171:8081/addvertiesment/';
   
   List<dynamic> _ads = [];
   bool _isLoading = true;
@@ -88,12 +88,12 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
     // Styling to match "Term Test Papers" card
     final boxDecoration = BoxDecoration(
       color: Colors.white,
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(0),
       boxShadow: [
         BoxShadow(
           color: Colors.deepPurple.withOpacity(0.1),
-          blurRadius: 10,
-          offset: const Offset(0, 4),
+          blurRadius: 0,
+          offset: const Offset(0, 0),
         ),
       ],
       border: Border.all(color: Colors.deepPurple.withOpacity(0.2)),
@@ -101,7 +101,7 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
 
     if (_isLoading) {
       return Container(
-        height: 120,
+        height: 100,
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
         decoration: boxDecoration,
         child: const Center(
@@ -118,11 +118,11 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
     }
 
     return Container(
-      height: 120, // Equal to term test papers card height estimate
+      height: 100, // Equal to term test papers card height estimate
       margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
       decoration: boxDecoration,
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
+        borderRadius: BorderRadius.circular(0),
         child: Stack(
           children: [
             PageView.builder(
@@ -136,7 +136,7 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
               itemBuilder: (context, index) {
                 final ad = _ads[index];
                 final imageName = ad['imageName'] ?? '';
-                final imageUrl = '$_baseImageUrl$imageName';
+                final imageUrl = Uri.encodeFull('$_baseImageUrl$imageName');
                 
                 return Image.network(
                   imageUrl,
@@ -153,7 +153,7 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
                             Icon(Icons.image_not_supported_outlined, 
                               color: Colors.deepPurple.withOpacity(0.3), 
                               size: 32),
-                            const SizedBox(height: 4),
+                            const SizedBox(height: 1),
                             Text(
                               'Ad not available',
                               style: TextStyle(
