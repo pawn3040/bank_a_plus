@@ -81,13 +81,13 @@ class _MathsHelperState extends State<MathsHelper> {
         });
       } else {
         setState(() {
-          _errorMessage = 'Failed to load Q&A entries (${response.statusCode})';
+          _errorMessage = 'Failed to load Q&A entries. Please try again later.';
           _isLoading = false;
         });
       }
     } catch (e) {
       setState(() {
-        _errorMessage = 'Error: ${e.toString()}';
+        _errorMessage = 'Unable to connect to the server. Please check your network and try again.';
         _isLoading = false;
       });
     }

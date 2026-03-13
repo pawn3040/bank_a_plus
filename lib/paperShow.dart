@@ -95,7 +95,7 @@ class _PaperShowState extends State<PaperShow> {
       });
     } catch (e) {
       setState(() {
-        errorMessage = 'Error: ${e.toString()}';
+        errorMessage = 'Unable to fetch papers. Please try again later.';
         isLoading = false;
       });
     }
@@ -141,7 +141,7 @@ class _PaperShowState extends State<PaperShow> {
         _showSnack('Download failed (${response.statusCode})');
       }
     } catch (e) {
-      _showSnack('Error: ${e.toString()}');
+      _showSnack('Unable to download paper. Please check your connection and try again.');
     } finally {
       setState(() => _downloading[paper.id] = false);
     }

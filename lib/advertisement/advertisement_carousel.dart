@@ -10,7 +10,7 @@ class AdvertisementCarousel extends StatefulWidget {
   State<AdvertisementCarousel> createState() => _AdvertisementCarouselState();
 }
 
-class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
+class _AdvertisementCarouselState extends State<AdvertisementCarousel> with WidgetsBindingObserver {
   final String _apiUrl = 'http://10.39.30.171:8081/api/v1/advertisement/get_active';
   final String _baseImageUrl = 'http://10.39.30.171:8081/addvertiesment/';
   
@@ -18,20 +18,32 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
   bool _isLoading = true;
   late PageController _pageController;
   Timer? _timer;
+  Timer? _pollTimer;
   int _currentPage = 0;
 
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     _pageController = PageController(initialPage: 0);
     _fetchAds();
+    _pollTimer = Timer.periodic(const Duration(seconds: 15), (_) => _fetchAds());
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _timer?.cancel();
+    _pollTimer?.cancel();
     _pageController.dispose();
     super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      _fetchAds();
+    }
   }
 
   Future<void> _fetchAds() async {
@@ -44,7 +56,7 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> {
             _ads = data;
             _isLoading = false;
           });
-          if (_ads.isNotEmpty) {
+          if (_ads.isNotEmpty && _timer == null) {
             _startTimer();
           }
         }

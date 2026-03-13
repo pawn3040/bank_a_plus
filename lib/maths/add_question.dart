@@ -76,13 +76,20 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
           Navigator.pop(context, true);
         }
       } else {
-        throw Exception('Failed to submit question: ${response.body}');
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            const SnackBar(
+              content: Text('Failed to submit question. Please try again later.'),
+              backgroundColor: Colors.red,
+            ),
+          );
+        }
       }
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Error: ${e.toString()}'),
+          const SnackBar(
+            content: Text('Unable to submit question. Please check your network and try again.'),
             backgroundColor: Colors.red,
           ),
         );
