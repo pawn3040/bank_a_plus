@@ -47,7 +47,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
     try {
       var request = http.MultipartRequest(
         'POST',
-        Uri.parse('http://10.39.30.171:8081/api/v1/qanda/add_qanda'),
+        Uri.parse('http://192.168.8.117:8081/api/v1/qanda/add_qanda'),
       );
 
       request.fields['qname'] = _nameController.text;

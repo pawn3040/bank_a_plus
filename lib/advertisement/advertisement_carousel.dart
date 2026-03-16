@@ -11,8 +11,8 @@ class AdvertisementCarousel extends StatefulWidget {
 }
 
 class _AdvertisementCarouselState extends State<AdvertisementCarousel> with WidgetsBindingObserver {
-  final String _apiUrl = 'http://10.39.30.171:8081/api/v1/advertisement/get_active';
-  final String _baseImageUrl = 'http://10.39.30.171:8081/addvertiesment/';
+  final String _apiUrl = 'http://192.168.8.117:8081/api/v1/advertisement/get_active';
+  final String _baseImageUrl = 'http://192.168.8.117:8081/addvertiesment/';
   
   List<dynamic> _ads = [];
   bool _isLoading = true;

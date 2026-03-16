@@ -46,11 +46,11 @@ class MathsHelper extends StatefulWidget {
   const MathsHelper({Key? key}) : super(key: key);
 
   @override
-  State<MathsHelper> createState() => _MathsHelperState();
+  MathsHelperState createState() => MathsHelperState();
 }
 
-class _MathsHelperState extends State<MathsHelper> {
-  final String _baseUrl = 'http://10.39.30.171:8081/api/v1/qanda';
+class MathsHelperState extends State<MathsHelper> {
+  final String _baseUrl = 'http://192.168.8.117:8081/api/v1/qanda';
   List<QandADto> _allQandA = [];
   bool _isLoading = true;
   String? _errorMessage;
@@ -58,6 +58,10 @@ class _MathsHelperState extends State<MathsHelper> {
   @override
   void initState() {
     super.initState();
+    _fetchQandA();
+  }
+
+  void refresh() {
     _fetchQandA();
   }
 
@@ -108,55 +112,6 @@ class _MathsHelperState extends State<MathsHelper> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
- 
-            ElevatedButton(
-  onPressed: () async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const AddQuestionPage(),
-      ),
-    );
-    if (result == true) {
-      _fetchQandA();
-    }
-  },
-  style: ElevatedButton.styleFrom(
-    backgroundColor: Colors.deepPurple,
-    foregroundColor: Colors.white,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(12),
-    ),
-    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
-  ),
-  child: Column(
-    mainAxisSize: MainAxisSize.min,
-    children: const [
-      Row(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Icon(Icons.add, size: 18),
-          SizedBox(width: 2),
-          Text(
-            "Q",
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ],
-      ),
-      SizedBox(height: 2),
-      Text(
-        "Add your question",
-        style: TextStyle(
-          fontSize: 10,
-          fontWeight: FontWeight.w400,
-        ),
-      ),
-    ],
-  ),
-),
             Expanded(
               child: _isLoading
                   ? const Center(child: CircularProgressIndicator())
@@ -282,7 +237,7 @@ class _MathsHelperState extends State<MathsHelper> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      Uri.encodeFull('http://10.39.30.171:8081/QandA/${qanda.qimagename}'),
+                      Uri.encodeFull('http://192.168.8.117:8081/QandA/${qanda.qimagename}'),
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
                         height: 100,
@@ -332,7 +287,7 @@ class _MathsHelperState extends State<MathsHelper> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        Uri.encodeFull('http://10.39.30.171:8081/QandA/${qanda.aimagename}'),
+                        Uri.encodeFull('http://192.168.8.117:8081/QandA/${qanda.aimagename}'),
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
                           height: 100,

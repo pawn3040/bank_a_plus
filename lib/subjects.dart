@@ -56,7 +56,7 @@ class _SubjectsState extends State<Subjects> {
       // Extract grade number from "Grade XX"
       final int gradeNum = int.parse(grade.split(' ').last);
       final response = await http.get(
-        Uri.parse('http://10.39.30.171:8081/api/v1/paper/get_subjects_by_grade?grade=$gradeNum'),
+        Uri.parse('http://192.168.8.117:8081/api/v1/paper/get_subjects_by_grade?grade=$gradeNum'),
       );
 
       if (response.statusCode == 200) {
@@ -66,7 +66,10 @@ class _SubjectsState extends State<Subjects> {
           isLoading = false;
         });
       } else {
-        throw Exception('Failed to load subjects');
+        setState(() {
+          isLoading = false;
+          hasError = true;
+        });
       }
     } catch (e) {
       setState(() {

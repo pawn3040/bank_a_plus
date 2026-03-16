@@ -1,5 +1,6 @@
 import 'package:bank_a_plus/selectTerm.dart';
 import 'package:bank_a_plus/subjects.dart';
+import 'package:bank_a_plus/paperShow.dart';
 import 'package:flutter/material.dart';
 
 
@@ -68,7 +69,7 @@ class Home extends StatelessWidget {
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const Subjects(term: 3, fixedGrade: 20),
+                    builder: (context) => const PaperShow(grade: 20, subject: "s5", term: 3),
                   ),
                 ),
               ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bank_a_plus/Home.dart';
 import 'package:bank_a_plus/maths/maths_helper.dart';
+import 'package:bank_a_plus/maths/add_question.dart';
 import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 
 class MainScaffold extends StatefulWidget {
@@ -13,10 +14,19 @@ class MainScaffold extends StatefulWidget {
 class _MainScaffoldState extends State<MainScaffold> {
   int _selectedIndex = 0;
 
-  final List<Widget> _pages = const [
-    Home(title: 'edica'),
-    MathsHelper(),
-  ];
+  // Key to communicate with MathsHelper state
+  final GlobalKey<MathsHelperState> _mathsHelperKey = GlobalKey();
+
+  late final List<Widget> _pages;
+
+  @override
+  void initState() {
+    super.initState();
+    _pages = [
+      const Home(title: 'edica'),
+      MathsHelper(key: _mathsHelperKey),
+    ];
+  }
 
   final List<String> _titles = const [
     'Home',
@@ -44,6 +54,24 @@ class _MainScaffoldState extends State<MainScaffold> {
           Expanded(child: _pages[_selectedIndex]),
         ],
       ),
+      floatingActionButton: _selectedIndex == 1
+          ? FloatingActionButton.extended(
+              onPressed: () async {
+                final result = await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const AddQuestionPage()),
+                );
+                if (result == true) {
+                  // Call refresh on the MathsHelper state
+                  _mathsHelperKey.currentState?.refresh();
+                }
+              },
+              backgroundColor: Colors.deepPurple,
+              foregroundColor: Colors.white,
+              icon: const Icon(Icons.add),
+              label: const Text("Q"),
+            )
+          : null,
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
           boxShadow: [

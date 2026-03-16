@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:io';
+import 'dart:io' as io;
 import 'package:path_provider/path_provider.dart';
 import 'package:open_filex/open_filex.dart';
 import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 import 'package:bank_a_plus/widgets/network_error_widget.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path/path.dart' as p;
+import 'package:bank_a_plus/utils/web_download_helper.dart'
+    if (dart.library.io) 'package:bank_a_plus/utils/web_download_helper_stub.dart';
 
 class PaperShow extends StatefulWidget {
   final int grade;
@@ -42,7 +47,7 @@ class _Paper {
 
 // ── State ─────────────────────────────────────────────────────────────────────
 class _PaperShowState extends State<PaperShow> {
-  static const String _baseUrl = 'http://10.39.30.171:8081/api/v1/paper';
+  static const String _baseUrl = 'http://192.168.8.117:8081/api/v1/paper';
 
   // medium order: Sinhala first, Tamil second, English third
   static const List<String> _mediumOrder = ['Sinhala', 'Tamil', 'English'];
@@ -128,24 +133,71 @@ class _PaperShowState extends State<PaperShow> {
     setState(() => _downloading[paper.id] = true);
 
     try {
-      final uri =
-          Uri.parse('$_baseUrl/download_paper?id=${paper.id}');
+      final uri = Uri.parse('$_baseUrl/download_paper?id=${paper.id}');
       final response = await http.get(uri);
 
       if (response.statusCode == 200) {
-        final dir = await getApplicationDocumentsDirectory();
-        final file = File('${dir.path}/${paper.pdfName}');
-        await file.writeAsBytes(response.bodyBytes);
-        await OpenFilex.open(file.path);
+        // Ensure filename has .pdf extension
+        String fileName = paper.pdfName;
+        if (!fileName.toLowerCase().endsWith('.pdf')) {
+          fileName += '.pdf';
+        }
+
+        if (kIsWeb) {
+          // Web platform: Use blob URL to trigger download
+          await downloadFileWeb(response.bodyBytes, fileName);
+          _showSnack('Download started');
+        } else {
+          // Mobile/Desktop platforms: Use file system
+          io.Directory? dir;
+          try {
+            // Try to get temporary directory
+            dir = await getTemporaryDirectory();
+          } catch (e) {
+            // Fallback: try application documents directory
+            try {
+              dir = await getApplicationDocumentsDirectory();
+            } catch (e2) {
+              // Last resort: use system temp directory
+              dir = io.Directory.systemTemp;
+            }
+          }
+          
+          final filePath = p.join(dir.path, fileName);
+          final file = io.File(filePath);
+          
+          // Write the file
+          await file.writeAsBytes(response.bodyBytes);
+          
+          // Use Share to open/save the file
+          final result = await Share.shareXFiles(
+            [XFile(filePath)],
+            text: 'Sharing $fileName',
+            subject: 'Edica Past Paper: ${widget.subject}',
+          );
+
+          if (result.status == ShareResultStatus.success) {
+            _showSnack('File opened successfully');
+          }
+        }
       } else {
         _showSnack('Download failed (${response.statusCode})');
       }
     } catch (e) {
-      _showSnack('Unable to download paper. Please check your connection and try again.');
+      String errorMsg = 'Download failed';
+      if (e.toString().contains('MissingPluginException') || 
+          e.toString().contains('_Namespace') ||
+          e.toString().contains('Unsupported operation')) {
+        errorMsg = 'Download error: ${e.toString()}';
+      } else {
+        errorMsg = 'Error: ${e.toString()}';
+      }
+      _showSnack(errorMsg);
     } finally {
       setState(() => _downloading[paper.id] = false);
     }
   }
+
 
   void _showSnack(String msg) {
     if (mounted) {
