@@ -266,16 +266,36 @@ class MathsHelperState extends State<MathsHelper> {
                 children: [
                   Row(
                     children: [
-                      const Icon(Icons.check_circle, color: Colors.green, size: 20),
-                      const SizedBox(width: 8),
-                      Text(
-                        'A: answered by: ${qanda.aname ?? ""}',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
-                          color: Colors.green,
+                      CircleAvatar(
+                        radius: 18,
+                        backgroundColor: Colors.green.shade100,
+                        backgroundImage: const AssetImage('assets/images/face.jpeg'),
+                      ),
+                      const SizedBox(width: 12),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'answered by: ${qanda.aname ?? ""}',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                                color: Colors.green,
+                              ),
+                            ),
+                            const Text(
+                              'Answer',
+                              style: TextStyle(
+                                fontSize: 11,
+                                color: Colors.green,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                          ],
                         ),
                       ),
+                      const Icon(Icons.check_circle, color: Colors.green, size: 20),
                     ],
                   ),
                   const SizedBox(height: 8),
