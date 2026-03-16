@@ -181,8 +181,12 @@ class MathsHelperState extends State<MathsHelper> {
   Widget _buildQandACard(QandADto qanda) {
     return Card(
       margin: const EdgeInsets.only(bottom: 16),
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+      elevation: 6,
+      shadowColor: Colors.deepPurple.withOpacity(0.3),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(16),
+        side: BorderSide(color: Colors.deepPurple.shade300, width: 1.5),
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
