@@ -3,23 +3,108 @@ import 'package:bank_a_plus/subjects.dart';
 import 'package:bank_a_plus/paperShow.dart';
 import 'package:bank_a_plus/theme/edica_palette.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:io' as io;
+import 'package:path_provider/path_provider.dart';
+import 'package:share_plus/share_plus.dart';
+import 'package:path/path.dart' as p;
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:bank_a_plus/utils/web_download_helper.dart'
+    if (dart.library.io) 'package:bank_a_plus/utils/web_download_helper_stub.dart';
 
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key, required String title}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  List<dynamic> _specialPapers = [];
+  bool _isLoadingSpecial = true;
+  final Map<int, bool> _downloading = {};
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchSpecialPapers();
+  }
+
+  Future<void> _fetchSpecialPapers() async {
+    try {
+      final mediums = ['Sinhala', 'Tamil', 'English'];
+      final List<dynamic> allFetched = [];
+      
+      final results = await Future.wait(mediums.map((m) => http.get(
+        Uri.parse('http://192.168.8.117:8081/api/v1/paper/search_paper?grade=30&term=1&subject=sp&medium=$m')
+      )));
+
+      for (var response in results) {
+        if (response.statusCode == 200) {
+          final List<dynamic> data = json.decode(response.body);
+          allFetched.addAll(data);
+        }
+      }
+
+      if (mounted) {
+        setState(() {
+          _specialPapers = allFetched;
+          _isLoadingSpecial = false;
+        });
+      }
+    } catch (e) {
+      if (mounted) {
+        setState(() => _isLoadingSpecial = false);
+      }
+    }
+  }
+
+  Future<void> _downloadPaper(dynamic paper) async {
+    final int paperId = paper['id'];
+    final String pdfName = paper['pdfName'] ?? 'Paper';
+    
+    setState(() => _downloading[paperId] = true);
+
+    try {
+      final response = await http.get(Uri.parse('http://192.168.8.117:8081/api/v1/paper/download_paper?id=$paperId'));
+
+      if (response.statusCode == 200) {
+        String fileName = pdfName;
+        if (!fileName.toLowerCase().endsWith('.pdf')) fileName += '.pdf';
+
+        if (kIsWeb) {
+          await downloadFileWeb(response.bodyBytes, fileName);
+        } else {
+          final dir = await getTemporaryDirectory();
+          final filePath = p.join(dir.path, fileName);
+          final file = io.File(filePath);
+          await file.writeAsBytes(response.bodyBytes);
+          await Share.shareXFiles([XFile(filePath)], text: '$pdfName');
+        }
+      }
+    } catch (e) {
+      debugPrint('Download error: $e');
+    } finally {
+      if (mounted) {
+        setState(() => _downloading[paperId] = false);
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            const Color.fromARGB(255, 107, 144, 232),
-             const Color.fromARGB(255, 37, 111, 189),
-            const Color.fromARGB(255, 119, 3, 148),
-            const Color.fromARGB(255, 17, 216, 67),
+            Color.fromARGB(255, 107, 144, 232),
+            Color.fromARGB(255, 37, 111, 189),
+            Color.fromARGB(255, 119, 3, 148),
+            Color.fromARGB(255, 17, 216, 67),
           ],
         ),
       ),
@@ -30,8 +115,11 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-         
-              const SizedBox(height: 18),
+              if (!_isLoadingSpecial && _specialPapers.isNotEmpty) ...[
+                _buildSpecialResourceSection(),
+               // const SizedBox(height: 24),
+              ],
+              const SizedBox(height: 8),
               _buildCategoryCard(
                 context,
                 'Term Test Papers',
@@ -96,6 +184,127 @@ class Home extends StatelessWidget {
               ),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildSpecialResourceSection() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Padding(
+          padding: EdgeInsets.only(left: 4, bottom: 12),
+    
+        ),
+        ..._specialPapers.map((paper) => _buildSpecialPaperCard(paper)).toList(),
+      ],
+    );
+  }
+
+  Widget _buildSpecialPaperCard(dynamic paper) {
+    final int paperId = paper['id'];
+    final bool isDownloading = _downloading[paperId] ?? false;
+    final String medium = paper['medium'] ?? 'Unknown';
+    final String pdfName = paper['pdfName'] ?? 'Special Paper';
+
+    return Container(
+      margin: const EdgeInsets.only(bottom: 12),
+      decoration: BoxDecoration(
+        color: EdicaPalette.surface,
+        borderRadius: BorderRadius.circular(24),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withOpacity(0.4),
+            blurRadius: 20,
+            offset: const Offset(0, 10),
+          ),
+        ],
+      ),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(24),
+        child: Stack(
+          children: [
+            Positioned.fill(
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [EdicaPalette.surface, EdicaPalette.surface2],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  border: Border.all(color: Colors.white.withOpacity(0.08)),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(18),
+              child: Row(
+                children: [
+                  Container(
+                    width: 44,
+                    height: 44,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF6366F1).withOpacity(0.15),
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    child: const Icon(Icons.picture_as_pdf_rounded, color: Color(0xFF6366F1), size: 24),
+                  ),
+                  const SizedBox(width: 14),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          pdfName,
+                          style: const TextStyle(
+                            color: EdicaPalette.onSurface,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w800,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        const SizedBox(height: 2),
+                        Text(
+                          medium,
+                          style: const TextStyle(
+                            color: EdicaPalette.onSurfaceMuted,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(width: 8),
+                  SizedBox(
+                    height: 38,
+                    child: isDownloading
+                        ? const Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(strokeWidth: 2, color: Color(0xFF6366F1)),
+                            ),
+                          )
+                        : ElevatedButton(
+                            onPressed: () => _downloadPaper(paper),
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: const Color(0xFF6366F1),
+                              foregroundColor: Colors.white,
+                              elevation: 0,
+                              padding: const EdgeInsets.symmetric(horizontal: 16),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                            ),
+                            child: const Text('Download', style: TextStyle(fontSize: 12, fontWeight: FontWeight.w800)),
+                          ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
