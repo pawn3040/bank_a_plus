@@ -103,38 +103,48 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Ask a Question'),
-        backgroundColor: Colors.deepPurple,
+        title: const Text(
+          'Ask a Question',
+          style: TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.1),
+        ),
+        backgroundColor: const Color(0xFF001D3D), // Edica Navy
         foregroundColor: Colors.white,
+        centerTitle: true,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            colors: [Colors.deepPurple.shade50, Colors.white],
+            colors: [Color(0xFFF0F4FF), Colors.white],
           ),
         ),
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(24.0),
+          physics: const BouncingScrollPhysics(),
+          padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
           child: Form(
             key: _formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 const AdvertisementCarousel(),
+                const SizedBox(height: 10),
                 const Text(
                   'Post Your Question',
                   style: TextStyle(
                     fontSize: 24,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w900,
+                    color: Color(0xFF001D3D),
                   ),
                 ),
                 const SizedBox(height: 8),
                 Text(
                   'Fill in the details below to ask your question.',
-                  style: TextStyle(color: Colors.grey.shade600),
+                  style: TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 32),
                 
@@ -143,10 +153,16 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                   controller: _nameController,
                   decoration: InputDecoration(
                     labelText: 'Your Name',
+                    labelStyle: const TextStyle(color: Color(0xFF001D3D), fontWeight: FontWeight.w600),
                     hintText: 'Enter your name (optional)',
-                    prefixIcon: const Icon(Icons.person_outline),
+                    prefixIcon: const Icon(Icons.person_outline_rounded, color: Color(0xFF6366F1)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Color(0xFF6366F1), width: 2),
                     ),
                     filled: true,
                     fillColor: Colors.white,
@@ -160,10 +176,16 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                   maxLines: 4,
                   decoration: InputDecoration(
                     labelText: 'Question Description',
+                    labelStyle: const TextStyle(color: Color(0xFF001D3D), fontWeight: FontWeight.w600),
                     hintText: 'What is your question?',
-                    prefixIcon: const Icon(Icons.question_mark_rounded),
+                    prefixIcon: const Icon(Icons.question_mark_rounded, color: Color(0xFF6366F1)),
                     border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: BorderSide(color: Colors.grey.shade300),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(16),
+                      borderSide: const BorderSide(color: Color(0xFF6366F1), width: 2),
                     ),
                     filled: true,
                     fillColor: Colors.white,
@@ -176,8 +198,9 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                 const Text(
                   'Attach an Image (Optional)',
                   style: TextStyle(
-                    fontWeight: FontWeight.w600,
-                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w800,
+                    color: Color(0xFF001D3D),
+                    fontSize: 16,
                   ),
                 ),
                 const SizedBox(height: 10),
@@ -227,23 +250,24 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                 ElevatedButton(
                   onPressed: _isSubmitting ? null : _submitQuestion,
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.deepPurple,
+                    backgroundColor: const Color(0xFF001D3D), // Edica Navy
                     foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 16),
+                    padding: const EdgeInsets.symmetric(vertical: 18),
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: BorderRadius.circular(16),
                     ),
-                    elevation: 2,
+                    elevation: 4,
+                    shadowColor: const Color(0xFF001D3D).withOpacity(0.4),
                   ),
                   child: _isSubmitting
                       ? const SizedBox(
                           height: 20,
                           width: 20,
-                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2),
+                          child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2.5),
                         )
                       : const Text(
                           'Submit Question',
-                          style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 18, fontWeight: FontWeight.w900, letterSpacing: 0.5),
                         ),
                 ),
               ],

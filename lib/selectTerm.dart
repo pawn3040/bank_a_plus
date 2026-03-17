@@ -32,17 +32,18 @@ class SelectTerm extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F2FF),
+      backgroundColor: const Color(0xFFF4F6FF),
       appBar: AppBar(
         title: const Text(
           'Select Term',
           style: TextStyle(
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w800,
             fontSize: 20,
             color: Colors.white,
+            letterSpacing: 1.2,
           ),
         ),
-        backgroundColor: const Color(0xFF6C47FF),
+        backgroundColor: const Color(0xFF001D3D), // Edica Navy
         elevation: 0,
         centerTitle: true,
         iconTheme: const IconThemeData(color: Colors.white),
@@ -52,8 +53,18 @@ class SelectTerm extends StatelessWidget {
           const AdvertisementCarousel(),
           Expanded(
             child: Container(
-                child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              decoration: const BoxDecoration(
+                gradient: LinearGradient(
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  colors: [
+                    Color(0xFFF4F6FF),
+                    Colors.white,
+                  ],
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 24.0),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [

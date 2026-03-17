@@ -43,8 +43,11 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(_titles[_selectedIndex]),
-        backgroundColor: Colors.deepPurple,
+        title: Text(
+          _titles[_selectedIndex],
+          style: const TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2),
+        ),
+        backgroundColor: const Color(0xFF001D3D), // Edica Navy
         elevation: 0,
         centerTitle: true,
       ),
@@ -66,10 +69,10 @@ class _MainScaffoldState extends State<MainScaffold> {
                   _mathsHelperKey.currentState?.refresh();
                 }
               },
-              backgroundColor: Colors.deepPurple,
+              backgroundColor: const Color(0xFF6366F1), // Indigo blue from logo
               foregroundColor: Colors.white,
               icon: const Icon(Icons.add),
-              label: const Text("Q"),
+              label: const Text("Q", style: TextStyle(fontWeight: FontWeight.bold)),
             )
           : null,
       bottomNavigationBar: Container(
@@ -85,22 +88,36 @@ class _MainScaffoldState extends State<MainScaffold> {
         child: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
-          selectedItemColor: Colors.deepPurple,
-          unselectedItemColor: Colors.grey.shade500,
+          selectedItemColor: const Color(0xFF6366F1),
+          unselectedItemColor: Colors.grey.shade400,
           backgroundColor: Colors.white,
           elevation: 0,
           type: BottomNavigationBarType.fixed,
-          selectedFontSize: 13,
+          selectedFontSize: 14,
           unselectedFontSize: 12,
+          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900),
+          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
           items: const [
             BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined),
-              activeIcon: Icon(Icons.home),
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.home_rounded, size: 28),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.home_rounded, size: 32),
+              ),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.calculate_outlined),
-              activeIcon: Icon(Icons.calculate),
+              icon: Padding(
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.calculate_outlined, size: 28),
+              ),
+              activeIcon: Padding(
+                padding: EdgeInsets.only(bottom: 4.0),
+                child: Icon(Icons.calculate_rounded, size: 32),
+              ),
               label: 'Maths Helper',
             ),
           ],
