@@ -70,7 +70,7 @@ class _MainScaffoldState extends State<MainScaffold> {
                 }
               },
               backgroundColor: const Color(0xFF6366F1), // Indigo blue from logo
-              foregroundColor: Colors.white,
+              foregroundColor: const Color.fromARGB(255, 254, 254, 254),
               icon: const Icon(Icons.add),
               label: const Text("Q", style: TextStyle(fontWeight: FontWeight.bold)),
             )
@@ -88,9 +88,9 @@ class _MainScaffoldState extends State<MainScaffold> {
         child: BottomNavigationBar(
           currentIndex: _selectedIndex,
           onTap: _onItemTapped,
-          selectedItemColor: const Color(0xFF6366F1),
-          unselectedItemColor: Colors.grey.shade400,
-          backgroundColor: Colors.white,
+          selectedItemColor: const Color.fromARGB(255, 151, 1, 174),
+          unselectedItemColor: const Color.fromARGB(255, 255, 248, 248),
+          backgroundColor: const Color.fromARGB(255, 74, 181, 71),
           elevation: 0,
           type: BottomNavigationBarType.fixed,
           selectedFontSize: 14,
