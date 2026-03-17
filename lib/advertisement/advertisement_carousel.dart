@@ -161,7 +161,7 @@ class _AdvertisementCarouselState extends State<AdvertisementCarousel> with Widg
 
         return Container(
           height: 100,
-          margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 12.0),
+          margin: const EdgeInsets.symmetric(horizontal: 1.0, vertical: 1.0),
           decoration: boxDecoration,
           child: ClipRRect(
             borderRadius: BorderRadius.circular(0),

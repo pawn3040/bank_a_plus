@@ -43,16 +43,17 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 42, // Reduced height
+        toolbarHeight: 20, // Reduced height by further 20%
         title: Text(
           _titles[_selectedIndex],
           style: const TextStyle(
-            fontSize: 16, // Smaller font
+            fontSize: 15, // Slightly smaller font to fit
             fontWeight: FontWeight.w800, 
-            letterSpacing: 1.0
+            letterSpacing: 0.8,
+            color: Color.fromARGB(255, 217, 217, 217)
           ),
         ),
-        backgroundColor: const Color(0xFF001D3D), // Edica Navy
+        backgroundColor: const Color.fromARGB(255, 0, 0, 0), // Edica Navy
         elevation: 0,
         centerTitle: true,
       ),
@@ -93,7 +94,7 @@ class _MainScaffoldState extends State<MainScaffold> {
           ],
         ),
         child: SizedBox(
-          height: 52, // More compact BottomNav
+          height: 58, // Increased by ~10% for better touch targets
           child: BottomNavigationBar(
             currentIndex: _selectedIndex,
             onTap: _onItemTapped,
@@ -102,19 +103,19 @@ class _MainScaffoldState extends State<MainScaffold> {
             backgroundColor: const Color.fromARGB(255, 74, 181, 71),
             elevation: 0,
             type: BottomNavigationBarType.fixed,
-            selectedFontSize: 11,
-            unselectedFontSize: 10,
-            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900, height: 1.2),
-            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, height: 1.2),
+            selectedFontSize: 12,
+            unselectedFontSize: 11,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900, height: 1.3),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, height: 1.3),
             items: const [
               BottomNavigationBarItem(
-                icon: Icon(Icons.home_rounded, size: 20),
-                activeIcon: Icon(Icons.home_rounded, size: 22),
+                icon: Icon(Icons.home_rounded, size: 22),
+                activeIcon: Icon(Icons.home_rounded, size: 24),
                 label: 'Home',
               ),
               BottomNavigationBarItem(
-                icon: Icon(Icons.calculate_outlined, size: 20),
-                activeIcon: Icon(Icons.calculate_rounded, size: 22),
+                icon: Icon(Icons.calculate_outlined, size: 22),
+                activeIcon: Icon(Icons.calculate_rounded, size: 24),
                 label: 'Maths Helper',
               ),
             ],

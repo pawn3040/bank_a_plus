@@ -54,9 +54,9 @@ class _PaperShowState extends State<PaperShow> {
 
   // medium colours
   static const Map<String, Color> _mediumColor = {
-    'Sinhala': Color(0xFF6C47FF),
-    'Tamil': Color(0xFF2E7CF6),
-    'English': Color(0xFF00BFA5),
+    'Sinhala': Color.fromARGB(255, 106, 69, 255),
+    'Tamil': Color.fromARGB(255, 155, 5, 255),
+    'English': Color.fromARGB(255, 87, 225, 77),
   };
 
   bool isLoading = true;
@@ -239,7 +239,7 @@ class _PaperShowState extends State<PaperShow> {
               ),
               child: Column(
                 children: [
-                  _buildInfoBanner(),
+                 
                   Expanded(child: _buildBody()),
                 ],
               ),
@@ -250,64 +250,6 @@ class _PaperShowState extends State<PaperShow> {
     );
   }
 
-  Widget _buildInfoBanner() {
-    return Container(
-      width: double.infinity,
-      margin: const EdgeInsets.fromLTRB(16, 16, 16, 8),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-        boxShadow: [
-          BoxShadow(
-            color: const Color(0xFF6C47FF).withOpacity(0.1),
-            blurRadius: 12,
-            offset: const Offset(0, 4),
-          ),
-        ],
-      ),
-      child: Row(
-        children: [
-          Container(
-            padding: const EdgeInsets.all(10),
-            decoration: BoxDecoration(
-              color: const Color(0xFF6C47FF).withOpacity(0.1),
-              borderRadius: BorderRadius.circular(12),
-            ),
-            child: const Icon(
-              Icons.library_books_rounded,
-              color: Color(0xFF6C47FF),
-              size: 22,
-            ),
-          ),
-          const SizedBox(width: 12),
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Grade ${widget.grade}  •  ${widget.subject}',
-                  style: const TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w700,
-                    color: Color(0xFF2D2D2D),
-                  ),
-                ),
-                const SizedBox(height: 2),
-                Text(
-                  'Term ${widget.term} Past Papers',
-                  style: const TextStyle(
-                    fontSize: 12,
-                    color: Color(0xFF888888),
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
   Widget _buildBody() {
     if (isLoading) {
