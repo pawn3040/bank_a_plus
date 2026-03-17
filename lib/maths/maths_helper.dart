@@ -104,7 +104,7 @@ class MathsHelperState extends State<MathsHelper> {
         gradient: LinearGradient(
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
-          colors: [Colors.deepPurple.shade50, Colors.white],
+          colors: [const Color.fromARGB(255, 63, 232, 94), Colors.white],
         ),
       ),
       child: Padding(
@@ -185,7 +185,7 @@ class MathsHelperState extends State<MathsHelper> {
       shadowColor: Colors.deepPurple.withOpacity(0.3),
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(16),
-        side: BorderSide(color: Colors.deepPurple.shade300, width: 1.5),
+        side: BorderSide(color: const Color.fromARGB(255, 99, 21, 234), width: 1.5),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -199,7 +199,7 @@ class MathsHelperState extends State<MathsHelper> {
                 Row(
                   children: [
                     CircleAvatar(
-                      backgroundColor: Colors.deepPurple.shade100,
+                      backgroundColor: const Color.fromARGB(255, 78, 29, 167),
                       child: const Icon(Icons.person, color: Colors.deepPurple),
                     ),
                     const SizedBox(width: 12),
@@ -245,7 +245,7 @@ class MathsHelperState extends State<MathsHelper> {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) => Container(
                         height: 100,
-                        color: Colors.grey.shade200,
+                        color: const Color.fromARGB(255, 223, 137, 137),
                         child: const Center(child: Icon(Icons.image_not_supported)),
                       ),
                     ),
@@ -315,7 +315,7 @@ class MathsHelperState extends State<MathsHelper> {
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) => Container(
                           height: 100,
-                          color: Colors.grey.shade200,
+                          color: const Color.fromARGB(255, 37, 7, 7),
                           child: const Center(child: Icon(Icons.image_not_supported)),
                         ),
                       ),
