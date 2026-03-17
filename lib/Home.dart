@@ -1,6 +1,7 @@
 import 'package:bank_a_plus/selectTerm.dart';
 import 'package:bank_a_plus/subjects.dart';
 import 'package:bank_a_plus/paperShow.dart';
+import 'package:bank_a_plus/theme/edica_palette.dart';
 import 'package:flutter/material.dart';
 
 
@@ -15,8 +16,10 @@ class Home extends StatelessWidget {
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
           colors: [
-            const Color(0xFFF0F4FF), // Very soft blue
-            Colors.white,
+            const Color.fromARGB(255, 107, 144, 232),
+             const Color.fromARGB(255, 37, 111, 189),
+            const Color.fromARGB(255, 119, 3, 148),
+            const Color.fromARGB(255, 17, 216, 67),
           ],
         ),
       ),
@@ -27,12 +30,17 @@ class Home extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+         
+              const SizedBox(height: 18),
               _buildCategoryCard(
                 context,
                 'Term Test Papers',
                 'Grades 06 - 13',
                 Icons.assignment_outlined,
-                [const Color(0xFFFFD54F), const Color(0xFFFFB300)], 
+                const [
+                  EdicaPalette.indigo,
+                  EdicaPalette.sky,
+                ],
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const SelectTerm()),
@@ -44,28 +52,26 @@ class Home extends StatelessWidget {
                 'A/L Pass Papers',
                 'Advanced Level',
                 Icons.history_edu_rounded,
-                [const Color(0xFFF28B82), const Color(0xFFEA4335)], 
+                const [
+                  EdicaPalette.purple,
+                  EdicaPalette.indigo,
+                ],
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Subjects(term: 3, fixedGrade: 22)),
                 ),
               ),
-              const SizedBox(height: 16),
-              _buildCategoryCard(
-                context,
-                'A/L Model Papers',
-                'Target Questions',
-                Icons.school_outlined,
-                [const Color(0xFF80CBC4), const Color(0xFF4DB6AC)], 
-                () {}, // Add link if needed
-              ),
+  
               const SizedBox(height: 16),
               _buildCategoryCard(
                 context,
                 'OL Pass Papers',
                 'Ordinary Level',
                 Icons.menu_book_rounded,
-                [const Color(0xFFAECBFA), const Color(0xFF4285F4)], 
+                const [
+                  EdicaPalette.sky,
+                  EdicaPalette.indigo,
+                ],
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const Subjects(term: 3, fixedGrade: 21)),
@@ -77,7 +83,10 @@ class Home extends StatelessWidget {
                 'Grade 5 Scholarship',
                 'Primary School',
                 Icons.stars_rounded,
-                [const Color(0xFFCCFF90), const Color(0xFF689F38)], 
+                const [
+                  EdicaPalette.green,
+                  EdicaPalette.purple,
+                ],
                 () => Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -100,15 +109,19 @@ class Home extends StatelessWidget {
     List<Color> gradientColors,
     VoidCallback onTap,
   ) {
+    final accent1 = gradientColors[0];
+    final accent2 = gradientColors[1];
+    final accent = Color.lerp(accent1, accent2, 0.5) ?? accent2;
+
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: EdicaPalette.surface,
         borderRadius: BorderRadius.circular(24),
         boxShadow: [
           BoxShadow(
-            color: gradientColors[0].withOpacity(0.35),
-            blurRadius: 15,
-            offset: const Offset(0, 8),
+            color: Colors.black.withOpacity(0.55),
+            blurRadius: 26,
+            offset: const Offset(0, 18),
           ),
         ],
       ),
@@ -117,63 +130,121 @@ class Home extends StatelessWidget {
         child: InkWell(
           onTap: onTap,
           borderRadius: BorderRadius.circular(24),
-          child: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 24),
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(24),
-              gradient: LinearGradient(
-                colors: [
-                  gradientColors[0],
-                  gradientColors[1],
-                ],
-                begin: Alignment.topLeft,
-                end: Alignment.bottomRight,
-              ),
-              border: Border.all(color: Colors.white.withOpacity(0.6), width: 1.5),
-            ),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
+          child: Stack(
+            children: [
+              // dark surface background + subtle accent glow
+              Positioned.fill(
+                child: DecoratedBox(
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
+                    borderRadius: BorderRadius.circular(24),
+                    gradient: LinearGradient(
+                      colors: [
+                        EdicaPalette.surface,
+                        EdicaPalette.surface2,
+                      ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                    border: Border.all(color: Colors.white.withOpacity(0.08), width: 1),
+                  ),
+                ),
+              ),
+              // decorative accent glows
+              Positioned(
+                right: -26,
+                top: -18,
+                child: Container(
+                  width: 84,
+                  height: 84,
+                  decoration: BoxDecoration(
+                    color: accent1.withOpacity(0.22),
                     shape: BoxShape.circle,
                   ),
-                  child: Icon(icon, color: Colors.white, size: 32),
                 ),
-                const SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 19,
-                          fontWeight: FontWeight.w900,
-                          color: Colors.white,
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                      const SizedBox(height: 4),
-                      Text(
-                        subtitle,
-                        style: TextStyle(
-                          fontSize: 13,
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white.withOpacity(0.9),
-                        ),
-                      ),
-                    ],
+              ),
+              Positioned(
+                right: 18,
+                bottom: -22,
+                child: Container(
+                  width: 64,
+                  height: 64,
+                  decoration: BoxDecoration(
+                    color: accent2.withOpacity(0.18),
+                    shape: BoxShape.circle,
                   ),
                 ),
-                Icon(
-                  Icons.arrow_forward_ios_rounded, 
-                  color: Colors.white.withOpacity(0.8), 
-                  size: 18
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 20),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 50,
+                      height: 50,
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: [
+                            accent1.withOpacity(0.95),
+                            accent2.withOpacity(0.95),
+                          ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: accent.withOpacity(0.35),
+                            blurRadius: 18,
+                            offset: const Offset(0, 12),
+                          ),
+                        ],
+                      ),
+                      child: Icon(icon, color: EdicaPalette.navy.withOpacity(0.9), size: 28),
+                    ),
+                    const SizedBox(width: 14),
+                    Expanded(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.w900,
+                              color: EdicaPalette.onSurface,
+                              letterSpacing: 0.2,
+                            ),
+                          ),
+                          const SizedBox(height: 4),
+                          Text(
+                            subtitle,
+                            style: const TextStyle(
+                              fontSize: 12.8,
+                              fontWeight: FontWeight.w700,
+                              color: EdicaPalette.onSurfaceMuted,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 36,
+                      height: 36,
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.06),
+                        borderRadius: BorderRadius.circular(14),
+                        border: Border.all(color: Colors.white.withOpacity(0.08)),
+                      ),
+                      child: Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white.withOpacity(0.70),
+                        size: 16,
+                      ),
+                    ),
+                  ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),
