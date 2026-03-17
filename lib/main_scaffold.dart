@@ -43,9 +43,14 @@ class _MainScaffoldState extends State<MainScaffold> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        toolbarHeight: 42, // Reduced height
         title: Text(
           _titles[_selectedIndex],
-          style: const TextStyle(fontWeight: FontWeight.w800, letterSpacing: 1.2),
+          style: const TextStyle(
+            fontSize: 16, // Smaller font
+            fontWeight: FontWeight.w800, 
+            letterSpacing: 1.0
+          ),
         ),
         backgroundColor: const Color(0xFF001D3D), // Edica Navy
         elevation: 0,
@@ -58,21 +63,23 @@ class _MainScaffoldState extends State<MainScaffold> {
         ],
       ),
       floatingActionButton: _selectedIndex == 1
-          ? FloatingActionButton.extended(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => const AddQuestionPage()),
-                );
-                if (result == true) {
-                  // Call refresh on the MathsHelper state
-                  _mathsHelperKey.currentState?.refresh();
-                }
-              },
-              backgroundColor: const Color(0xFF6366F1), // Indigo blue from logo
-              foregroundColor: const Color.fromARGB(255, 254, 254, 254),
-              icon: const Icon(Icons.add),
-              label: const Text("Q", style: TextStyle(fontWeight: FontWeight.bold)),
+          ? SizedBox(
+              height: 44, // Smaller FAB
+              child: FloatingActionButton.extended(
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const AddQuestionPage()),
+                  );
+                  if (result == true) {
+                    _mathsHelperKey.currentState?.refresh();
+                  }
+                },
+                backgroundColor: const Color(0xFF6366F1),
+                foregroundColor: const Color.fromARGB(255, 254, 254, 254),
+                icon: const Icon(Icons.add, size: 20),
+                label: const Text("Q", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
+              ),
             )
           : null,
       bottomNavigationBar: Container(
@@ -85,42 +92,33 @@ class _MainScaffoldState extends State<MainScaffold> {
             ),
           ],
         ),
-        child: BottomNavigationBar(
-          currentIndex: _selectedIndex,
-          onTap: _onItemTapped,
-          selectedItemColor: const Color.fromARGB(255, 151, 1, 174),
-          unselectedItemColor: const Color.fromARGB(255, 255, 248, 248),
-          backgroundColor: const Color.fromARGB(255, 74, 181, 71),
-          elevation: 0,
-          type: BottomNavigationBarType.fixed,
-          selectedFontSize: 14,
-          unselectedFontSize: 12,
-          selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900),
-          unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500),
-          items: const [
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.home_rounded, size: 28),
+        child: SizedBox(
+          height: 52, // More compact BottomNav
+          child: BottomNavigationBar(
+            currentIndex: _selectedIndex,
+            onTap: _onItemTapped,
+            selectedItemColor: const Color.fromARGB(255, 151, 1, 174),
+            unselectedItemColor: const Color.fromARGB(255, 255, 248, 248),
+            backgroundColor: const Color.fromARGB(255, 74, 181, 71),
+            elevation: 0,
+            type: BottomNavigationBarType.fixed,
+            selectedFontSize: 11,
+            unselectedFontSize: 10,
+            selectedLabelStyle: const TextStyle(fontWeight: FontWeight.w900, height: 1.2),
+            unselectedLabelStyle: const TextStyle(fontWeight: FontWeight.w500, height: 1.2),
+            items: const [
+              BottomNavigationBarItem(
+                icon: Icon(Icons.home_rounded, size: 20),
+                activeIcon: Icon(Icons.home_rounded, size: 22),
+                label: 'Home',
               ),
-              activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.home_rounded, size: 32),
+              BottomNavigationBarItem(
+                icon: Icon(Icons.calculate_outlined, size: 20),
+                activeIcon: Icon(Icons.calculate_rounded, size: 22),
+                label: 'Maths Helper',
               ),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.calculate_outlined, size: 28),
-              ),
-              activeIcon: Padding(
-                padding: EdgeInsets.only(bottom: 4.0),
-                child: Icon(Icons.calculate_rounded, size: 32),
-              ),
-              label: 'Maths Helper',
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
