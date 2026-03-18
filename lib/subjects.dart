@@ -89,11 +89,11 @@ class _SubjectsState extends State<Subjects> {
         else if (widget.fixedGrade == 21) base = "O/L";
         else if (widget.fixedGrade == 20) base = "Grade 5";
         else base = "Grade ${widget.fixedGrade}";
-        return "$base Subjects (Term ${widget.term})";
+        return "$base Subjects";
       }
       return selectedGrade == null 
-        ? 'Term ${widget.term} Papers' 
-        : 'Subjects for $selectedGrade (Term ${widget.term})';
+        ? 'Papers' 
+        : 'Subjects for $selectedGrade';
     }
 
     return Scaffold(

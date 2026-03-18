@@ -233,7 +233,7 @@ class _PaperShowState extends State<PaperShow> {
       appBar: AppBar(
         toolbarHeight: 40,
         title: Text(
-          'Term ${widget.term} Papers',
+          'Papers',
           style: const TextStyle(
             fontWeight: FontWeight.w800,
             fontSize: 18,

@@ -143,7 +143,7 @@ class _AddQuestionPageState extends State<AddQuestionPage> {
                 ),
                 const SizedBox(height: 8),
                 Text(
-                  'Fill in the details below to ask your question.',
+                  'Please complete the form below to submit your school-level question. Only difficult or advanced school-level problems will be accepted',
                   style: TextStyle(color: Colors.grey.shade600, fontWeight: FontWeight.w500),
                 ),
                 const SizedBox(height: 32),

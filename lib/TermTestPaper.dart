@@ -69,7 +69,7 @@ class _TermTestPaperState extends State<TermTestPaper> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(selectedGrade == null ? 'Term ${widget.term} Papers' : 'Subjects for $selectedGrade (Term ${widget.term})'),
+        title: Text(selectedGrade == null ? 'Papers' : 'Subjects for $selectedGrade'),
         backgroundColor: Colors.deepPurple,
         elevation: 0,
         centerTitle: true,
