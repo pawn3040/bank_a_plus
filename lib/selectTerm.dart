@@ -32,21 +32,25 @@ class SelectTerm extends StatelessWidget {
     ];
 
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F6FF),
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        toolbarHeight: 38,
         title: const Text(
           'Select Term',
           style: TextStyle(
             fontWeight: FontWeight.w800,
-            fontSize: 20,
+            fontSize: 18,
             color: Colors.white,
-            letterSpacing: 1.2,
+            letterSpacing: 1.0,
           ),
         ),
-        backgroundColor: const Color(0xFF001D3D), // Edica Navy
+        backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 18, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Column(
         children: [
@@ -58,8 +62,10 @@ class SelectTerm extends StatelessWidget {
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
                   colors: [
-                    Color(0xFFF4F6FF),
-                    Colors.white,
+                    Color.fromARGB(255, 107, 144, 232),
+                    Color.fromARGB(255, 37, 111, 189),
+                    Color.fromARGB(255, 119, 3, 148),
+                    Color.fromARGB(255, 17, 216, 67),
                   ],
                 ),
               ),
@@ -159,56 +165,88 @@ class _TermCardState extends State<_TermCard>
       child: GestureDetector(
         onTap: _onTap,
         child: Container(
-          height: 90,
+          height: 85,
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: widget.gradientColors,
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            borderRadius: BorderRadius.circular(20),
+            color: const Color.fromARGB(255, 30, 30, 30).withOpacity(0.85),
+            borderRadius: BorderRadius.circular(24),
+            border: Border.all(color: Colors.white.withOpacity(0.12), width: 1),
             boxShadow: [
               BoxShadow(
-                color: widget.gradientColors.first.withOpacity(0.35),
-                blurRadius: 16,
-                offset: const Offset(0, 6),
+                color: Colors.black.withOpacity(0.35),
+                blurRadius: 18,
+                offset: const Offset(0, 10),
               ),
             ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0),
-            child: Row(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(12),
+          child: Stack(
+            children: [
+              // Subtle accent glow
+              Positioned(
+                right: -20,
+                top: -20,
+                child: Container(
+                  width: 70,
+                  height: 70,
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.2),
-                    borderRadius: BorderRadius.circular(14),
-                  ),
-                  child: Icon(
-                    widget.icon,
-                    color: const Color.fromARGB(255, 247, 247, 247),
-                    size: 32,
+                    color: widget.gradientColors.first.withOpacity(0.15),
+                    shape: BoxShape.circle,
                   ),
                 ),
-                const SizedBox(width: 20),
-                Text(
-                  widget.label,
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    letterSpacing: 0.5,
-                  ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: Row(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(12),
+                      decoration: BoxDecoration(
+                        gradient: LinearGradient(
+                          colors: widget.gradientColors,
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: widget.gradientColors.first.withOpacity(0.3),
+                            blurRadius: 12,
+                            offset: const Offset(0, 6),
+                          ),
+                        ],
+                      ),
+                      child: Icon(
+                        widget.icon,
+                        color: Colors.black.withOpacity(0.7),
+                        size: 28,
+                      ),
+                    ),
+                    const SizedBox(width: 18),
+                    Text(
+                      widget.label,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w900,
+                        color: Colors.white,
+                        letterSpacing: 0.5,
+                      ),
+                    ),
+                    const Spacer(),
+                    Container(
+                      padding: const EdgeInsets.all(8),
+                      decoration: BoxDecoration(
+                        color: Colors.white.withOpacity(0.05),
+                        borderRadius: BorderRadius.circular(12),
+                      ),
+                      child: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        color: Colors.white60,
+                        size: 14,
+                      ),
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                const Icon(
-                  Icons.arrow_forward_ios_rounded,
-                  color: Colors.white70,
-                  size: 20,
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
         ),
       ),

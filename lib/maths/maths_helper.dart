@@ -51,6 +51,7 @@ class MathsHelper extends StatefulWidget {
 
 class MathsHelperState extends State<MathsHelper> {
   final String _baseUrl = 'http://192.168.8.117:8081/api/v1/qanda';
+  static const String _imageBaseUrl = 'http://192.168.8.117:8081/QandA/';
   List<QandADto> _allQandA = [];
   bool _isLoading = true;
   String? _errorMessage;
@@ -241,12 +242,34 @@ class MathsHelperState extends State<MathsHelper> {
                   ClipRRect(
                     borderRadius: BorderRadius.circular(8),
                     child: Image.network(
-                      Uri.encodeFull('http://192.168.8.117:8081/QandA/${qanda.qimagename}'),
+                      Uri.encodeFull('$_imageBaseUrl${qanda.qimagename}'),
                       fit: BoxFit.cover,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        if (loadingProgress == null) return child;
+                        return Container(
+                          height: 140,
+                          color: Colors.black.withOpacity(0.05),
+                          alignment: Alignment.center,
+                          child: const CircularProgressIndicator(strokeWidth: 2),
+                        );
+                      },
                       errorBuilder: (context, error, stackTrace) => Container(
                         height: 100,
                         color: const Color.fromARGB(255, 223, 137, 137),
-                        child: const Center(child: Icon(Icons.image_not_supported)),
+                        child: Center(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const Icon(Icons.image_not_supported),
+                              const SizedBox(height: 6),
+                              Text(
+                                '$error',
+                                textAlign: TextAlign.center,
+                                style: const TextStyle(fontSize: 11),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -269,7 +292,7 @@ class MathsHelperState extends State<MathsHelper> {
                       CircleAvatar(
                         radius: 18,
                         backgroundColor: Colors.green.shade100,
-                        backgroundImage: const AssetImage('assets/images/face.jpeg'),
+                        child: const Icon(Icons.person, color: Colors.green, size: 20),
                       ),
                       const SizedBox(width: 12),
                       Expanded(
@@ -311,12 +334,34 @@ class MathsHelperState extends State<MathsHelper> {
                     ClipRRect(
                       borderRadius: BorderRadius.circular(8),
                       child: Image.network(
-                        Uri.encodeFull('http://192.168.8.117:8081/QandA/${qanda.aimagename}'),
+                        Uri.encodeFull('$_imageBaseUrl${qanda.aimagename}'),
                         fit: BoxFit.cover,
+                        loadingBuilder: (context, child, loadingProgress) {
+                          if (loadingProgress == null) return child;
+                          return Container(
+                            height: 140,
+                            color: Colors.black.withOpacity(0.05),
+                            alignment: Alignment.center,
+                            child: const CircularProgressIndicator(strokeWidth: 2),
+                          );
+                        },
                         errorBuilder: (context, error, stackTrace) => Container(
                           height: 100,
                           color: const Color.fromARGB(255, 37, 7, 7),
-                          child: const Center(child: Icon(Icons.image_not_supported)),
+                          child: Center(
+                            child: Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                const Icon(Icons.image_not_supported, color: Colors.white),
+                                const SizedBox(height: 6),
+                                Text(
+                                  '$error',
+                                  textAlign: TextAlign.center,
+                                  style: const TextStyle(fontSize: 11, color: Colors.white),
+                                ),
+                              ],
+                            ),
+                          ),
                         ),
                       ),
                     ),

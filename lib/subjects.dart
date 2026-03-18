@@ -98,12 +98,21 @@ class _SubjectsState extends State<Subjects> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(getTitle()),
-        backgroundColor: Colors.deepPurple,
+        toolbarHeight: 40,
+        title: Text(
+          getTitle(),
+          style: const TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w800,
+            letterSpacing: 1.0,
+            color: Colors.white,
+          ),
+        ),
+        backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: Colors.white),
           onPressed: () {
             if (selectedGrade != null && widget.fixedGrade == null) {
               setState(() {
@@ -121,11 +130,16 @@ class _SubjectsState extends State<Subjects> {
           const AdvertisementCarousel(),
           Expanded(
             child: Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Colors.deepPurple.shade50, Colors.white],
+                  colors: [
+                    Color.fromARGB(255, 107, 144, 232),
+                    Color.fromARGB(255, 37, 111, 189),
+                    Color.fromARGB(255, 119, 3, 148),
+                    Color.fromARGB(255, 17, 216, 67),
+                  ],
                 ),
               ),
               child: Padding(
@@ -138,9 +152,12 @@ class _SubjectsState extends State<Subjects> {
                       child: Text(
                         selectedGrade == null ? 'Select Your Grade' : 'Select Subject',
                         style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.deepPurple,
+                          fontSize: 26,
+                          fontWeight: FontWeight.w900,
+                          color: Colors.white,
+                          shadows: [
+                            Shadow(color: Colors.black45, blurRadius: 10, offset: Offset(0, 4)),
+                          ]
                         ),
                       ),
                     ),
@@ -189,32 +206,40 @@ class _SubjectsState extends State<Subjects> {
   Widget _buildGradeButton(BuildContext context, String grade) {
     return InkWell(
       onTap: () => _fetchSubjects(grade),
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(22),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          color: const Color.fromARGB(255, 30, 30, 30).withOpacity(0.85),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: Colors.white.withOpacity(0.15), width: 1),
           boxShadow: [
             BoxShadow(
-              color: Colors.deepPurple.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
             ),
           ],
-          border: Border.all(color: Colors.deepPurple.withOpacity(0.2)),
         ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.school, color: Colors.deepPurple, size: 30),
-              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF6366F1).withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.school_rounded, color: Color(0xFF6366F1), size: 32),
+              ),
+              const SizedBox(height: 10),
               Text(
                 grade,
                 style: const TextStyle(
                   fontSize: 18,
-                  fontWeight: FontWeight.w600,
-                  color: Colors.deepPurple,
+                  fontWeight: FontWeight.w800,
+                  color: Colors.white,
+                  letterSpacing: 0.5,
                 ),
               ),
             ],
@@ -239,35 +264,45 @@ class _SubjectsState extends State<Subjects> {
           ),
         );
       },
-      borderRadius: BorderRadius.circular(15),
+      borderRadius: BorderRadius.circular(22),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(15),
+          color: const Color.fromARGB(255, 30, 30, 30).withOpacity(0.85),
+          borderRadius: BorderRadius.circular(22),
+          border: Border.all(color: Colors.white.withOpacity(0.15), width: 1),
           boxShadow: [
             BoxShadow(
-              color: Colors.deepPurple.withOpacity(0.1),
-              blurRadius: 10,
-              offset: const Offset(0, 4),
+              color: Colors.black.withOpacity(0.3),
+              blurRadius: 15,
+              offset: const Offset(0, 8),
             ),
           ],
-          border: Border.all(color: Colors.deepPurple.withOpacity(0.2)),
         ),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              const Icon(Icons.book, color: Colors.deepPurple, size: 30),
-              const SizedBox(height: 8),
+              Container(
+                padding: const EdgeInsets.all(12),
+                decoration: BoxDecoration(
+                  color: const Color(0xFF6C47FF).withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: const Icon(Icons.menu_book_rounded, color: Color(0xFF6C47FF), size: 32),
+              ),
+              const SizedBox(height: 10),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                padding: const EdgeInsets.symmetric(horizontal: 12.0),
                 child: Text(
                   subject,
                   textAlign: TextAlign.center,
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
                   style: const TextStyle(
                     fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                    color: Colors.deepPurple,
+                    fontWeight: FontWeight.w800,
+                    color: Colors.white,
+                    letterSpacing: 0.3,
                   ),
                 ),
               ),

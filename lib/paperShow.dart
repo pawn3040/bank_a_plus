@@ -9,6 +9,7 @@ import 'package:bank_a_plus/advertisement/advertisement_carousel.dart';
 import 'package:bank_a_plus/widgets/network_error_widget.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:path/path.dart' as p;
+import 'package:url_launcher/url_launcher.dart';
 import 'package:bank_a_plus/utils/web_download_helper.dart'
     if (dart.library.io) 'package:bank_a_plus/utils/web_download_helper_stub.dart';
 
@@ -33,14 +34,21 @@ class _Paper {
   final int id;
   final String pdfName;
   final String medium;
+  final String? discussionUrl;
 
-  _Paper({required this.id, required this.pdfName, required this.medium});
+  _Paper({
+    required this.id,
+    required this.pdfName,
+    required this.medium,
+    this.discussionUrl,
+  });
 
   factory _Paper.fromJson(Map<String, dynamic> json) {
     return _Paper(
       id: json['id'] ?? 0,
       pdfName: json['pdfName']?.toString() ?? 'Paper',
       medium: json['medium']?.toString() ?? 'Unknown',
+      discussionUrl: json['discussionUrl']?.toString(),
     );
   }
 }
@@ -198,6 +206,17 @@ class _PaperShowState extends State<PaperShow> {
     }
   }
 
+  Future<void> _launchUrl(String? urlString) async {
+    if (urlString == null || urlString.isEmpty) return;
+    try {
+      final Uri uri = Uri.parse(urlString);
+      if (!await launchUrl(uri, mode: LaunchMode.externalApplication)) {
+        _showSnack('Could not open video link');
+      }
+    } catch (e) {
+      _showSnack('Invalid video link');
+    }
+  }
 
   void _showSnack(String msg) {
     if (mounted) {
@@ -210,20 +229,25 @@ class _PaperShowState extends State<PaperShow> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF4F2FF),
+      backgroundColor: Colors.black,
       appBar: AppBar(
+        toolbarHeight: 40,
         title: Text(
           'Term ${widget.term} Papers',
           style: const TextStyle(
-            fontWeight: FontWeight.bold,
-            fontSize: 20,
+            fontWeight: FontWeight.w800,
+            fontSize: 18,
             color: Colors.white,
+            letterSpacing: 1.0,
           ),
         ),
-        backgroundColor: const Color(0xFF6C47FF),
+        backgroundColor: Colors.black,
         elevation: 0,
         centerTitle: true,
-        iconTheme: const IconThemeData(color: Colors.white),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new_rounded, size: 20, color: Colors.white),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       body: Column(
         children: [
@@ -234,7 +258,12 @@ class _PaperShowState extends State<PaperShow> {
                 gradient: LinearGradient(
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
-                  colors: [Color(0xFFEDE9FF), Color(0xFFF9F9FF)],
+                  colors: [
+                    Color.fromARGB(255, 107, 144, 232),
+                    Color.fromARGB(255, 37, 111, 189),
+                    Color.fromARGB(255, 119, 3, 148),
+                    Color.fromARGB(255, 17, 216, 67),
+                  ],
                 ),
               ),
               child: Column(
@@ -412,33 +441,60 @@ class _PaperShowState extends State<PaperShow> {
             const SizedBox(width: 10),
 
             // ── Download button ───────────────────────────────────────────────
-            SizedBox(
-              height: 40,
-              child: isDownloading
-                  ? Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(
-                            strokeWidth: 2.5, color: color),
-                      ),
-                    )
-                  : ElevatedButton.icon(
-                      onPressed: () => _downloadPaper(paper),
-                      icon: const Icon(Icons.download_rounded, size: 17),
-                      label: const Text('Download',
-                          style: TextStyle(fontSize: 13)),
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: color,
-                        foregroundColor: Colors.white,
-                        elevation: 0,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SizedBox(
+                  height: 38,
+                  child: isDownloading
+                      ? Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(
+                                strokeWidth: 2, color: color),
+                          ),
+                        )
+                      : ElevatedButton.icon(
+                          onPressed: () => _downloadPaper(paper),
+                          icon: const Icon(Icons.download_rounded, size: 16),
+                          label: const Text('Download',
+                              style: TextStyle(fontSize: 12)),
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: color,
+                            foregroundColor: Colors.white,
+                            elevation: 0,
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 10, vertical: 0),
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8)),
+                          ),
+                        ),
+                ),
+                if (paper.discussionUrl != null &&
+                    paper.discussionUrl!.trim().isNotEmpty) ...[
+                  const SizedBox(height: 6),
+                  SizedBox(
+                    height: 36,
+                    child: OutlinedButton.icon(
+                      onPressed: () => _launchUrl(paper.discussionUrl),
+                      icon: const Icon(Icons.play_circle_fill_rounded,
+                          size: 16, color: Colors.red),
+                      label: const Text('Discussion',
+                          style: TextStyle(fontSize: 12, color: Colors.red)),
+                      style: OutlinedButton.styleFrom(
+                        side: const BorderSide(color: Colors.red, width: 1.2),
                         padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 0),
+                            horizontal: 10, vertical: 0),
                         shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10)),
+                            borderRadius: BorderRadius.circular(8)),
                       ),
                     ),
+                  ),
+                ],
+              ],
             ),
           ],
         ),
